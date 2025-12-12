@@ -1,1 +1,548 @@
 # kylenalicia.github.io
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kyle & Alicia - Wedding Invitation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Neonderthaw&family=Caveat+Brush&family=Chiron+GoRound+TC:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* CSS 樣式區 */
+        :root {
+            --color-white: #ffffff;
+            --color-light-purple: #FAF4FF; 
+            --color-medium-purple: #dcd0e8;
+            --color-dark-purple: #8e68a3;
+            --color-text: #333333;
+            --font-title: 'Neonderthaw', cursive;
+            --font-en: 'Caveat Brush', cursive;
+            --font-zh: 'Chiron GoRound TC', sans-serif; 
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--color-light-purple); 
+            color: var(--color-text);
+            font-family: var(--font-zh);
+            line-height: 1.6;
+            overflow-x: hidden; 
+        }
+
+        /* 區塊容器基礎樣式 */
+        .section {
+            padding: 80px 20px;
+            text-align: center;
+            background-color: var(--color-white); 
+            border-bottom: 1px solid var(--color-medium-purple);
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 1s ease-out, transform 1s ease-out;
+            min-height: 50vh; 
+        }
+        #details, #location, #photo-sharing {
+            background-color: var(--color-light-purple);
+        }
+
+        .section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* 字體樣式 */
+        h1, h2 {
+            font-family: var(--font-title);
+            color: var(--color-dark-purple);
+            letter-spacing: 2px;
+        }
+        h2 {
+            font-size: 3.5em; 
+        }
+        
+        .en-text {
+            font-family: var(--font-en);
+            font-size: 1.5em;
+        }
+        p, div:not(.countdown-item) {
+            font-family: var(--font-zh);
+        }
+
+       /* --- 第一部分：封面 (文字移至下方) --- */
+        #cover {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            
+            /* 修改 1：原本是 center (置中)，改成 flex-end (靠下) */
+            justify-content: flex-end; 
+            align-items: center;
+            
+            /* 修改 2：控制文字距離底部的距離 */
+            /* 15vh 代表螢幕高度的 15%，您可以改成 10vh (更低) 或 20vh (更高) */
+            padding-bottom: 35vh; 
+            
+            /* 修改 3：確保 padding 不會把頁面撐大出現捲軸 */
+            box-sizing: border-box;
+
+            color: var(--color-white);
+            background-image: url('https://dl.dropbox.com/scl/fi/0k4kxhm72z61c2n1r5as2/20251103-Alicia-131.jpg?rlkey=9d3znnm8m1n86rr0ppkkl5to7&st=xatgwpjf&dl=0'); 
+            background-size: cover;
+            background-position: center;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            opacity: 1 !important; 
+            transform: none !important;
+        }
+        #cover h1 { font-size: 4em; margin-bottom: 0.2em; color: var(--color-white); }
+        #cover .spacer { height: 80px; }
+        #cover .names { font-size: 3em; font-family: var(--font-en); }
+        #cover p { line-height: 1.2; margin-bottom: 5px; }
+
+        /* --- 第二部分：歡迎與主婚人 --- */
+        .couple-photo-container {
+            width: 80%; max-width: 400px; height: 250px; margin: 20px auto;
+            border: 5px solid var(--color-dark-purple); border-radius: 20px; overflow: hidden;
+        }
+        .couple-photo-container img {
+            width: 100%; height: 100%; object-fit: cover;
+        }
+        .parents-container {
+            display: flex; justify-content: center; align-items: center; padding: 0 10px;
+            gap: 20px; margin-top: 30px; max-width: 800px; margin-left: auto; margin-right: auto;
+        }
+        .parent-side { flex-grow: 1; flex-shrink: 0; flex-basis: 40%; padding: 0 10px; box-sizing: border-box; }
+        .parent-side.groom { text-align: right; }
+        .parent-side.bride { text-align: left; }
+        .name-pair > div { margin-bottom: 5px; white-space: nowrap; } 
+        .simple-divider { width: 1px; height: 100px; background-color: var(--color-medium-purple); flex-shrink: 0; }
+        
+        /* --- 第三段：Schedule 與倒數 --- */
+        #timeline-countdown {
+            background-color: var(--color-white); padding: 0; display: flex;
+            flex-direction: column; min-height: 60vh; align-items: center; justify-content: flex-start; 
+        }
+        .full-width-photo {
+            width: 100%; height: 40vh; 
+            background-image: linear-gradient(to top, rgba(255,255,255,1) 0%, rgba(255,255,255,0.7) 5%, rgba(255,255,255,0) 10%), 
+                url('https://dl.dropbox.com/scl/fi/6skn1inqilkhl7538bgpv/20251103-Alicia-175.jpg?rlkey=x2yiyxtel1inzj6xld2e5abp1&st=06lw59rv&dl=0'); 
+            background-size: cover; background-position: center; margin-bottom: 0; flex-shrink: 0; 
+        }
+        .timeline-content {
+            padding: 30px 20px 80px 20px; width: 100%; max-width: 1000px; box-sizing: border-box; 
+            flex-grow: 1; display: block; text-align: center;
+        }
+        .hand-drawn-timeline-image, .map-container img {
+            max-width: 100%; height: auto; margin: 20px 0;
+        }
+        .map-container img {
+      border-radius: 15px; 
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+      
+        /* 倒數計時器樣式 */
+        #countdown-timer {
+            display: flex; 
+            justify-content: center; 
+            gap: 20px; 
+            margin-top: 20px;
+        }
+        .countdown-item {
+            font-size: 2em;
+            font-family: var(--font-en);
+            color: var(--color-dark-purple);
+            text-align: center;
+            line-height: 1.2;
+        }
+        .countdown-label {
+            display: block; 
+            font-size: 0.5em;
+            font-family: var(--font-zh);
+            text-align: center;
+            color: var(--color-text);
+        }
+
+        /* --- 第四段：地點 --- */
+        .venue-name {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: var(--color-dark-purple);
+            margin: 20px 0;
+        }
+        .laurel-icon {
+            font-family: serif;
+            font-style: italic;
+        }
+        
+        /* --- 第五段：照片分享 --- */
+        .photo-album-button {
+            cursor: pointer; margin-top: 30px; padding: 40px;
+            border: 2px solid var(--color-dark-purple); background-color: var(--color-white); 
+            max-width: 400px; margin-left: auto; margin-right: auto; transition: background-color 0.3s;
+            border-radius: 15px;
+        }
+        .photo-album-button:hover {
+            background-color: var(--color-light-purple);
+        }
+        .hashtag {
+            font-family: var(--font-en);
+            font-size: 1.5em;
+            color: var(--color-dark-purple);
+            background-color: var(--color-white);
+            padding: 10px 20px;
+            border-radius: 20px;
+            display: inline-block;
+            margin-top: 10px;
+        }
+        
+        /* 漂浮頁面 Lightbox 樣式 */
+        #lightbox {
+            position: fixed; top: 0; left: 0;
+            width: 100%; height: 100%;
+            background-color: rgba(0, 0, 0, 0.85); 
+            display: none; 
+            justify-content: center; 
+            align-items: center; 
+            z-index: 1000;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .lightbox-content {
+            background-color: var(--color-white);
+            padding: 30px;
+            border-radius: 10px;
+            max-height: 90vh; 
+            overflow-y: auto; 
+            width: 100%;
+            max-width: 1200px;
+        }
+        .close-btn {
+            position: absolute; top: 20px; right: 30px;
+            color: var(--color-white); font-size: 40px;
+            cursor: pointer;
+            z-index: 1001; 
+        }
+/* --- 修改後的相簿網格樣式 (CSS Grid 拼貼風格) --- */
+        .photo-grid {
+            display: grid;
+            /* 電腦版預設為 3 欄 */
+            grid-template-columns: repeat(3, 1fr);
+            /* 設定最小行高，讓網格更穩定，auto 允許內容撐開 */
+            grid-auto-rows: 200px; 
+            gap: 15px; /* 照片間距加一點點 */
+            padding-bottom: 20px;
+        }
+
+        .grid-item {
+            /* 移除原本的寬度與 margin 設定，交給 Grid 管理 */
+            width: 100%;
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px; /* 圓角稍微大一點點比較柔和 */
+        }
+
+        /* --- 特殊尺寸類別 --- */
+        /* 橫向跨兩欄 (適合橫式照片) */
+        .grid-item.wide {
+            grid-column: span 2;
+        }
+        /* 直向跨兩列 (適合直式照片) */
+        .grid-item.tall {
+            grid-row: span 2;
+        }
+        /* 大方塊跨兩欄兩列 (適合重點照片) */
+        .grid-item.big {
+            grid-column: span 2;
+            grid-row: span 2;
+        }
+
+        .grid-item img {
+            width: 100%;
+            height: 100%;
+            display: block;
+            /* 重要！使用 cover 讓照片填滿網格區域而不變形，但會裁切掉邊緣 */
+            object-fit: cover; 
+            transition: transform 0.3s ease; /* 加入一點滑鼠懸停效果 */
+        }
+        
+        .grid-item:hover img {
+             transform: scale(1.05); /* 滑鼠移過去稍微放大 */
+        }
+
+        /* 響應式設計調整 */
+        @media (max-width: 768px) {
+            .photo-grid {
+                grid-template-columns: repeat(2, 1fr); /* 平板變 2 欄 */
+                grid-auto-rows: 150px; /* 高度稍微縮小 */
+            }
+            /* 在平板上，為了排版整齊，我們可以取消 tall 的跨列，或者保留看您喜好。
+               這邊示範保留 wide 和 big，但 tall 暫時取消以免破版 */
+            .grid-item.tall {
+                grid-row: span 1;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .photo-grid {
+                grid-template-columns: 1fr; /* 手機變 1 欄 */
+                grid-auto-rows: auto; /* 高度自動，讓照片完整顯示 */
+                gap: 10px;
+            }
+            /* 手機版取消所有跨欄跨列設定，全部直排 */
+            .grid-item.wide, 
+            .grid-item.tall, 
+            .grid-item.big {
+                grid-column: auto;
+                grid-row: auto;
+            }
+             .grid-item {
+                border-radius: 5px;
+                height: auto; /* 手機上高度自動 */
+            }
+             .grid-item img {
+                 height: auto;
+                 position: static;
+             }
+        }
+    </style>
+</head>
+<body>
+
+<section id="cover" class="section">
+    <h1>Wedding Invitation</h1>
+    <div class="spacer"></div> 
+    <div class="names en-text">Kyle & Alicia</div>
+    <p>2026年1月4日</p>
+    <p style="margin-bottom: 0;">台中北屯 - 園觀Palazzo Colonna</p>
+</section>
+
+<section id="details" class="section">
+    <div class="content-wrapper">
+        <h2>Welcome to Our Wedding</h2>
+        <div class="couple-photo-container">
+            <img src="https://dl.dropbox.com/scl/fi/awsozflsurmxf8f0j81ae/S__32161847_0.jpg?rlkey=matn97ncelspqw1evw9i7qdug&st=0qu0xvoe&dl=0" alt="新人合照"> 
+        </div>
+        <p style="font-size: 1.3em;">黃則淳 & 劉昱伶</p>
+
+        <p class="main-parent-title;">主婚人</p>
+        
+        <div class="parents-container">
+            <div class="parent-side groom">
+                <p style="margin: 0; font-size: 1.1em; color: var(--color-dark-purple);">新郎父母</p>
+                <div class="name-pair">
+                    <div>黃連成 先生</div>
+                    <div>施香瑜 女士</div>
+                </div>
+            </div>
+            
+            <div class="simple-divider"></div>
+            
+            <div class="parent-side bride">
+                <p style="margin: 0; font-size: 1.1em; color: var(--color-dark-purple);">新娘父母</p>
+                <div class="name-pair">
+                    <div>劉一德 先生</div>
+                    <div>郭照燕 女士</div>
+                </div>
+            </div>
+        </div>
+        
+        <p class="respectfully-invite" style="margin-top: 30px; font-size: 1.2em;">敬邀</p>
+    </div>
+</section>
+
+<section id="timeline-countdown" class="section">
+    <div class="full-width-photo"></div>
+    
+    <div class="timeline-content">
+        <h2>Schedule</h2> 
+        <p style="font-size: 1.2em;">邀請您 2026.01.04 (日) 前往台中圓觀</p>
+        <p style="font-size: 1.2em;">期待見到您~</p>
+        
+        <img src="https://dl.dropbox.com/scl/fi/425opktuqacab3c2m4lyy/2025-12-11-4-17-27.jpg?rlkey=e5sx24b13a0ie7h5txgf8t9kw&st=q8t5fr8f&dl=0" alt="手繪婚禮時間線" class="hand-drawn-timeline-image">
+        
+        <p style="font-size: 1.2em; margin-bottom: 10px; margin-top: 50px;">距離婚禮還有</p>
+        <div id="countdown-timer">
+            <div class="countdown-item"><span id="days">00</span><span class="countdown-label">Days</span></div>
+            <div class="countdown-item"><span id="hours">00</span><span class="countdown-label">Hours</span></div>
+            <div class="countdown-item"><span id="minutes">00</span><span class="countdown-label">Minutes</span></div>
+            <div class="countdown-item"><span id="seconds">00</span><span class="countdown-label">Seconds</span></div>
+        </div>
+    </div>
+</section>
+
+<section id="location" class="section">
+    <div class="content-wrapper">
+        <h2>Location</h2>
+        
+        <div class="map-container">
+            <img src="https://dl.dropbox.com/scl/fi/xotwetbs0bhq43y73nlrt/2025-12-11-11-13-32.jpg?rlkey=jwp7e0qo71nu4u4fti26edndj&st=2d0r2bkz&dl=0" alt="手繪地圖">
+        </div>
+        
+        <div class="venue-name">
+            <span class="laurel-icon">—</span>
+            <span>園觀Palazzo Colonna</span>
+            <span class="laurel-icon">—</span>
+        </div>
+        
+        <p>地址：台中市北屯區敦化路二段239號</p>
+        <p style="font-size: 0.9em; color: #666;">自行駕車可將車輛停至周邊停車格。</p>
+        
+        <p style="margin-top: 20px;">
+         <a href="https://www.google.com/maps/search/?api=1&query=%E5%8F%B0%E4%B8%AD%E5%9C%92%E8%A7%80Palazzo+Colonna" 
+         target="_blank" 
+         rel="noopener noreferrer"
+         style="color: var(--color-dark-purple); font-weight: bold; text-decoration: none;">
+         查看 Google 地圖導航
+        </a>
+      </p>
+    </div>
+</section>
+
+<section id="photo-sharing" class="section">
+    <div class="content-wrapper">
+        <h2>Album</h2>
+        
+        <div class="photo-album-button" onclick="openLightbox()">
+            <p style="font-size: 1.2em; font-weight: bold; margin: 0;">看更多照片</p>
+            <p style="font-size: 0.8em; color: var(--color-dark-purple); margin-top: 10px; margin-bottom: 0;">Click Here</p>
+        </div>
+        
+        <p style="font-size: 1.1em; margin-top: 40px;">歡迎您分享婚禮當天的照片並標註我們！</p>
+        <p style="font-size: 1.1em;">或使用以下Hashtag分享至您的社群媒體：</p>
+        <div class="hashtag">#KyleAndAlicia</div>
+    </div>
+</section>
+
+<div id="lightbox" onclick="closeLightbox(event)">
+    <span class="close-btn" onclick="closeLightbox(event)">×</span>
+    
+    <div class="lightbox-content">
+        <h2 style="font-family: var(--font-zh); margin-bottom: 20px; font-size: 2.5em;">YOU'RE MY SERENDIPITY</h2>
+        
+        <div class="photo-grid" id="photo-grid">
+            <div class="grid-item big">
+                <img src="https://dl.dropbox.com/scl/fi/lg06sf36f8dx23zhe15ms/S__32202758_0.jpg?rlkey=7z69x5xt4snprenvc90zeoj4t&st=2r16bmx9&dl=0" alt="婚禮照片 1"></div>
+            
+            <div class="grid-item">
+                <img src="https://dl.dropbox.com/scl/fi/pxy8xe8lgzscps5jvginx/20251103-Alicia-204.jpg?rlkey=aatgkt4keg9msaraw6vrc3t80&st=0ucapnbd&dl=0" alt="婚禮照片 2"></div>
+            
+            <div class="grid-item tall">
+                <img src="https://dl.dropbox.com/scl/fi/8w1uu6ni0dtr9z4975vdj/20251103-Alicia-195.jpg?rlkey=ltz1yfku3upo137wvaypnvi0d&st=tjquq8ku&dl=0" alt="婚禮照片 3"></div>
+            
+            <div class="grid-item tall">
+                <img src="https://dl.dropbox.com/scl/fi/ghjuez8vew5c6poap05t6/20251103-Alicia-185.jpg?rlkey=hksn6o4fb9rt5l8xontiqbgfq&st=ohig8bgp&dl=0" alt="婚禮照片 4"></div>
+          
+            <div class="grid-item">
+                <img src="https://dl.dropbox.com/scl/fi/q602hzwf3edfgf9jbzqkp/4-1.jpg?rlkey=dyuimqae66eu066m44p3y60h0&st=t9uk3s2s&dl=0" alt="婚禮照片 4-1"></div>
+          
+            <div class="grid-item big">
+                <img src="https://dl.dropbox.com/scl/fi/tghp1wena64m3rl7gc6tm/S__32202760_0.jpg?rlkey=pfxipqd0wgtmgri7spcrejgfq&st=d02yk0th&dl=0" alt="婚禮照片 5"></div>
+
+            <div class="grid-item big">
+              <img src="https://dl.dropbox.com/scl/fi/qqsouq5tmn8udrm3qror6/20251103-Alicia-193.jpg?rlkey=byjplz7z6ztmrwswgfdw30avz&st=cenjswky&dl=0" alt="婚禮照片 6"></div>
+          
+            <div class="grid-item">
+              <img src="https://dl.dropbox.com/scl/fi/8vl7vqkh15qpwvgbtusuc/20251103-Alicia-150.jpg?rlkey=grsx2ommi3wwxm4h9ntm8dj8d&st=nx6ti6v9&dl=0" alt="婚禮照片 7"></div>
+          
+            <div class="grid-item tall">
+              <img src="https://dl.dropbox.com/scl/fi/spojk5tyrfg5eqrmxhqyz/20251103-Alicia-108.jpg?rlkey=3dvtuxs5mu76q1fptgz6k78nb&st=nohf5sii&dl=0" alt="婚禮照片 8"></div>
+          
+            <div class="grid-item tall">
+              <img src="https://dl.dropbox.com/scl/fi/md1z3we8x44aghad0gg8y/20251103-Alicia-072.jpg?rlkey=u256z89izz7cmvyupi6kqtopq&st=pweib7a3&dl=0" alt="婚禮照片 9"></div>
+          
+            <div class="grid-item">
+              <img src="https://dl.dropbox.com/scl/fi/95cfkz6rkta2g2ju8fpih/S__32202756_0.jpg?rlkey=iqjzydyiwhg5msoq8aaja9zc1&st=esqgxowf&dl=0" alt="婚禮照片 10"></div>
+          
+            <div class="grid-item tall">
+              <img src="https://dl.dropbox.com/scl/fi/3222gng54educcw3w7g9b/20251103-Alicia-095.jpg?rlkey=5vhwtf1c97b1ng98tgotarerv&st=bfncvkwg&dl=0" alt="婚禮照片 11"></div>
+
+            <div class="grid-item tall">
+              <img src="https://dl.dropbox.com/scl/fi/s9cfqn5m5za65wc5w4ij6/12.jpg?rlkey=0w134sbf1zxqhqjvxq5nvlxpm&st=g4m3n721&dl=0" alt="婚禮照片 12"></div>
+          
+            <div class="grid-item">
+              <img src="https://dl.dropbox.com/scl/fi/lu9qj14sq4lgeqb0ynpm1/12-1.jpg?rlkey=sz026s931lt6fip4panycncf6&st=m279jtp7&dl=0" alt="婚禮照片 12-1"></div>
+          
+            <div class="grid-item wide">
+              <img src="https://dl.dropbox.com/scl/fi/q6bf0pv2lnuoj3o9jyn01/13.jpg?rlkey=nbtio90dstr3jv4827jarz2ug&st=q4dnfpil&dl=0" alt="婚禮照片 13"></div>
+          
+            <div class="grid-item tall">
+              <img src="https://dl.dropbox.com/scl/fi/6kjr3d5le2zp6bm2d36op/14.jpg?rlkey=kuhdfngvac701zrhliun2omzk&st=01soxe7d&dl=0" alt="婚禮照片 14"></div>
+          
+            <div class="grid-item tall">
+              <img src="https://dl.dropbox.com/scl/fi/zmnco0ok2pbjsa4f64fmc/13.jpg?rlkey=4pwbe3oi7af6vlvgh48adagv3&st=89ul2ty1&dl=0" alt="婚禮照片 15"></div>
+          
+            <div class="grid-item">
+              <img src="https://dl.dropbox.com/scl/fi/x3thu3vab33epciy8de30/15-1.jpg?rlkey=9bcftjequch67lvou01e5cyp3&st=zge62shs&dl=0" alt="婚禮照片 15-1"></div>
+          
+            <div class="grid-item tall">
+              <img src="https://dl.dropbox.com/scl/fi/u8ybab0eqkuyz346qh8sn/16.jpg?rlkey=qgd2qn17hejrdkto2u4oadtdh&st=zgb9il4y&dl=0" alt="婚禮照片 16"></div>
+      </div>
+    </div>
+</div>
+ 
+
+<script>
+    // --- 倒數計時器邏輯 ---
+    const countdownDate = new Date("Jan 4, 2026 10:30:00").getTime();
+    const updateCountdown = setInterval(function() {
+        const now = new Date().getTime();
+        const distance = countdownDate - now;
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        // Update the countdown only if the element exists
+        const daysEl = document.getElementById("days");
+        if (daysEl) {
+            daysEl.innerHTML = String(days).padStart(2, '0');
+            document.getElementById("hours").innerHTML = String(hours).padStart(2, '0');
+            document.getElementById("minutes").innerHTML = String(minutes).padStart(2, '0');
+            document.getElementById("seconds").innerHTML = String(seconds).padStart(2, '0');
+        }
+
+        if (distance < 0) {
+            clearInterval(updateCountdown);
+            const timerEl = document.getElementById("countdown-timer");
+            if(timerEl) {
+                timerEl.innerHTML = "婚禮已開始！恭喜新人！";
+            }
+        }
+    }, 1000);
+
+    // --- 捲動特效邏輯 ---
+    const sections = document.querySelectorAll('.section:not(#cover)');
+    const observer = new IntersectionObserver(function(entries, observer) {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                observer.unobserve(entry.target); 
+            }
+        });
+    }, { root: null, rootMargin: '0px', threshold: 0.2 });
+
+    sections.forEach(section => {
+        observer.observe(section);
+    });
+
+    // --- Lightbox / 浮動頁面邏輯 ---
+    function openLightbox() {
+        const lightbox = document.getElementById('lightbox');
+        if (lightbox) {
+            lightbox.style.display = 'flex';
+            document.body.style.overflow = 'hidden'; 
+        }
+    }
+
+    function closeLightbox(event) {
+        const lightbox = document.getElementById('lightbox');
+        if (event.target === lightbox || event.target.classList.contains('close-btn')) {
+            lightbox.style.display = 'none';
+            document.body.style.overflow = 'auto'; 
+        }
+        event.stopPropagation();
+    }
+</script>
+
+</body>
+</html>
